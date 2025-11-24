@@ -76,8 +76,8 @@
         <button class="flex flex-col items-center text-theme-accent">
             <i class="fas fa-calendar-day text-lg mb-1"></i>行程
         </button>
-        <button class="flex flex-col items-center hover:text-theme-text" onclick="window.open('https://goo.gl/maps/R3g7e8J9vYg8J7k9', '_blank')"> 
-            <i class="fas fa-map-marked-alt text-lg mb-1"></i>地圖
+        <button class="flex flex-col items-center hover:text-theme-text" onclick="window.open('https://www.google.com/maps/search/Nagoya+Japan', '_blank')"> 
+            <i class="fas fa-map-marked-alt text-lg mb-1"></i>開啟地圖
         </button>
         <button class="flex flex-col items-center hover:text-theme-text" onclick="showSkiModal()">
             <i class="fas fa-snowflake text-lg mb-1"></i>滑雪
@@ -139,9 +139,7 @@
 
 
     <script>
-        // === 資料中心 (整合原版資料結構) ===
-        // 你的資料結構已經很完整且支援詳細攻略，無需修改。
-        // === 資料中心 (核心邏輯未變，僅新增缺失的 Placeholder 資料) ===
+        // === 資料中心 (保持完整，參照上一個回答的 Day 1-Day 9 資料) ===
         const tripData = [
             // Day 1: 1/17 (六) - 保持不變 (完整內容)
             {
@@ -193,11 +191,12 @@
                 events: [
                     { time: "05:00", title: "起床", type: "other", categoryEN: "OTHER", desc: "早起痛苦但值得" },
                     { time: "06:00", title: "出發前往 白川鄉", type: "car", categoryEN: "DRIVE", desc: "車程約 1 小時" },
+                    // 注意：這裡的 link 是一個簡短網址，我們假設它是地圖連結，讓它走地圖按鈕。
                     { time: "07:00", title: "白川鄉合掌村", type: "sight", categoryEN: "SIGHTSEEING", desc: "世界遺產 / 拍照", link: "https://goo.gl/maps/R3g7e8J9vYg8J7k9" },
                 ]
             },
             
-            // 🔥 新增 Day 3 (Placeholder)
+            // Day 3 (Placeholder)
             {
                 date: "1/19", day: "Day 3", week: "一", city: "Kanazawa", weatherCity: "Kanazawa",
                 events: [
@@ -209,11 +208,12 @@
             {
                 date: "1/20", day: "Day 4", week: "二", city: "Tsugaike", weatherCity: "Otari",
                 events: [
-                    { time: "09:00", title: "栂池高原滑雪場", type: "ski", categoryEN: "SKI RESORT", desc: "初學者友善 / 鐘鳴之丘", link: "https://www.tsugaike.gr.jp/" },
+                    // 注意：這個 link 是一個外部網站，我們會為它生成兩個按鈕 (網站 + 地圖)
+                    { time: "09:00", title: "栂池高原滑雪場", type: "ski", categoryEN: "SKI RESORT", desc: "初學者友善 / 鐘鳴之丘", link: "https://www.tsugaike.gr.jp/", address: "長野県北安曇郡小谷村千国乙" },
                 ]
             },
             
-            // 🔥 新增 Day 5 (Placeholder)
+            // Day 5 (Placeholder)
             {
                 date: "1/21", day: "Day 5", week: "三", city: "Hakuba", weatherCity: "Hakuba",
                 events: [
@@ -236,7 +236,7 @@
                 ]
             },
             
-            // 🔥 新增 Day 8 (Placeholder)
+            // Day 8 (Placeholder)
             {
                 date: "1/24", day: "Day 8", week: "六", city: "Nagoya", weatherCity: "Nagoya",
                 events: [
@@ -244,7 +244,7 @@
                 ]
             },
 
-            // 🔥 新增 Day 9 (Placeholder)
+            // Day 9 (Placeholder)
             {
                 date: "1/25", day: "Day 9", week: "日", city: "Nagoya", weatherCity: "Nagoya",
                 events: [
@@ -262,21 +262,29 @@
             "這雪地開車很滑你們知道嗎？睡睡睡就知道睡！",
             "後座的，不要再吃東西了，掉屑屑很難清！"
         ];
+        
+        // 【新增工具函式】 根據 URL 猜測網站名稱
+        function guessDomainName(url) {
+            if (!url) return '網站';
+            try {
+                const domain = new URL(url).hostname;
+                if (domain.includes('tsugaike')) return '栂池官網';
+                if (domain.includes('goo.gl/maps') || domain.includes('google.com/maps')) return 'Google Maps';
+                if (domain.includes('gr.jp')) return '日本官網';
+                const parts = domain.split('.');
+                // 嘗試取出主域名 (例如 apple.com -> apple)
+                return parts.length > 2 ? parts[parts.length - 2] : parts[0] || '網站';
+            } catch (e) {
+                return '連結網站';
+            }
+        }
 
-        // === 核心邏輯 (主要修復區) ===
+        // === 核心邏輯 (僅保留) ===
         let currentDayIdx = 0;
 
         function init() {
-            // 修正：應確保初次渲染時，currentDayIdx 是正確的
             renderTabs();
             renderDay(0);
-            
-            // 監聽滾動以調整頂部導航列樣式 (B版原有的邏輯，保留)
-            window.addEventListener('scroll', () => {
-                const topBar = document.getElementById('top-bar');
-                // 修正：移除不必要的 shadow-sm classList 邏輯，改為單純的 glass 模糊效果
-                // B 版的樣式已經夠好，這裡不再額外添加 shadow-sm，保持 B 版的簡約風格
-            });
         }
 
         function renderTabs() {
@@ -289,32 +297,29 @@
                 </button>
             `).join('');
             
-            // 修正：確保切換時，被選中的日期按鈕能滾動到視圖中
             const activeTab = container.querySelector('.bg-theme-text');
             if(activeTab) {
-                // 將活躍標籤滾動到視圖中心
                 activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         }
 
         async function renderDay(idx) {
             currentDayIdx = idx;
-            renderTabs(); // 重新渲染 Tab 以更新選中狀態
+            renderTabs(); 
             const day = tripData[idx];
             const container = document.getElementById('itinerary-container');
             
-            // 天氣 API (保持不變)
+            // 天氣 API 邏輯 (略)
             let temp = "--";
             try {
                 const latLong = { 'Nagoya': '35.18,136.90', 'Takayama': '36.14,137.25', 'Hakuba': '36.69,137.86', 'Kanazawa': '36.56,136.65', 'Gujo': '35.75,136.96', 'Nagano': '36.65,138.19', 'Otari': '36.77,137.90' };
                 const coords = latLong[day.weatherCity] || latLong['Nagoya'];
-                // 使用非同步 await 獲取天氣資料，這是原版程式碼的正確寫法
                 const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coords.split(',')[0]}&longitude=${coords.split(',')[1]}&current_weather=true`);
                 const data = await res.json();
                 temp = Math.round(data.current_weather.temperature);
             } catch(e) { console.error("Weather fetch failed", e); }
 
-            // 天氣卡片 (B版樣式，保留)
+            // 天氣卡片 HTML (略)
             let html = `
                 <div class="bg-white rounded-[2rem] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex justify-between items-center relative overflow-hidden mb-10">
                     <div>
@@ -328,7 +333,7 @@
                 </div>
             `;
 
-            // 行程列表渲染 (B版樣式，保留)
+            // 行程列表渲染 HTML (略)
             html += day.events.map((ev, eventIdx) => `
                 <div class="flex gap-6 relative group cursor-pointer" onclick="openEventDetail(${idx}, ${eventIdx})">
                     <div class="absolute left-[4.5rem] top-10 bottom-0 w-px bg-theme-line z-0 group-last:hidden"></div>
@@ -355,14 +360,14 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // === 新增：開啟景點詳細 Modal (B版新增功能，保留並修復) ===
+        // === 開啟景點詳細 Modal (主要修正區) ===
         function openEventDetail(dayIdx, eventIdx) {
             const ev = tripData[dayIdx].events[eventIdx];
             const modal = document.getElementById('modal-event-detail');
             const card = document.getElementById('event-detail-card');
             const container = document.getElementById('event-detail-content');
 
-            // 構建詳情頁 HTML
+            // 構建詳情頁 HTML (略)
             let detailsHtml = `
                 <div class="flex items-center space-x-2 mb-4">
                     <span class="bg-theme-accent text-white px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase">${ev.categoryEN || ev.type}</span>
@@ -371,7 +376,7 @@
                 <h2 class="text-3xl font-bold text-theme-text mb-4 font-serif">${ev.title}</h2>
                 
                 ${ev.address ? `
-                    <a href="https://maps.google.com/?q=${encodeURIComponent(ev.address)}" target="_blank" class="flex items-start text-theme-muted text-sm mb-8 hover:text-theme-accent transition-colors">
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.address)}" target="_blank" class="flex items-start text-theme-muted text-sm mb-8 hover:text-theme-accent transition-colors">
                         <i class="fas fa-map-marker-alt mt-1 mr-3 text-theme-accent"></i>
                         <span class="flex-1 leading-relaxed">${ev.address}</span>
                     </a>
@@ -418,32 +423,79 @@
                         </div>
                     `).join('') : (ev.desc ? `<p>${ev.desc}</p>` : '<p class="text-theme-muted text-center py-8">尚無詳細資訊</p>')}
                 </div>
-
-                 <div class="pt-10 pb-24 space-y-3">
-                    ${ev.link ? `<button onclick="window.open('${ev.link}', '_blank')" class="w-full bg-theme-text text-white py-4 rounded-full font-bold flex items-center justify-center"><i class="fas fa-map-marked-alt mr-2"></i>開啟 Google Maps</button>` : ''}
-                    ${ev.rant ? `<button onclick="showDriverRant('${ev.rant.replace(/'/g, "\\'")}')" class="w-full bg-red-50 text-red-600 py-4 rounded-full font-bold flex items-center justify-center"><i class="fas fa-fire mr-2"></i>查看司機怒氣</button>` : ''}
-                 </div>
             `;
+
+            // --- 【修正 2 & 3: 底部按鈕區塊】 ---
+            
+            const mapSearchUrl = ev.address 
+                ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.address)}`
+                : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.title)}`;
+
+            let buttonHtml = '';
+
+            // 1. 【原版 Link 按鈕】 (修正: 區分地圖或外部網站)
+            if (ev.link) {
+                const domainName = guessDomainName(ev.link);
+                
+                // 如果是外部網站連結 (不是地圖連結)
+                if (domainName !== 'Google Maps') {
+                    // 按鈕 A: 外部網站按鈕 (修正 2)
+                    buttonHtml += `<button onclick="window.open('${ev.link}', '_blank')" class="w-full bg-theme-accent text-white py-4 rounded-full font-bold flex items-center justify-center">
+                        <i class="fas fa-external-link-alt mr-2"></i>開啟 ${domainName}
+                    </button>`;
+                    
+                    // 按鈕 B: 搭配地圖搜索按鈕 (修正 2)
+                    if (ev.address || ev.title) {
+                        buttonHtml += `<button onclick="window.open('${mapSearchUrl}', '_blank')" class="w-full bg-theme-text text-white py-4 rounded-full font-bold flex items-center justify-center">
+                            <i class="fas fa-map-marked-alt mr-2"></i>開啟 Google Maps
+                        </button>`;
+                    }
+                } 
+                // 如果是地圖連結，只顯示一個按鈕
+                else {
+                    buttonHtml += `<button onclick="window.open('${ev.link}', '_blank')" class="w-full bg-theme-text text-white py-4 rounded-full font-bold flex items-center justify-center">
+                        <i class="fas fa-map-marked-alt mr-2"></i>開啟 Google Maps
+                    </button>`;
+                }
+            } 
+            // 2. 【GPS 電話號碼按鈕】 (修正 3: 如果有電話，但沒有 link，提供地圖)
+            else if (ev.gpsPhone && (ev.address || ev.title)) {
+                buttonHtml += `<button onclick="window.open('${mapSearchUrl}', '_blank')" class="w-full bg-theme-text text-white py-4 rounded-full font-bold flex items-center justify-center">
+                    <i class="fas fa-mobile-alt mr-2"></i>手機開啟地圖 (導航用)
+                </button>`;
+            }
+
+
+            // 3. 【司機怒氣按鈕】 (保持不變)
+            const rantButton = ev.rant ? `<button onclick="showDriverRant('${ev.rant.replace(/'/g, "\\'")}')" class="w-full bg-red-50 text-red-600 py-4 rounded-full font-bold flex items-center justify-center">
+                <i class="fas fa-fire mr-2"></i>查看司機怒氣
+            </button>` : '';
+
+            detailsHtml += `
+                <div class="pt-10 pb-24 space-y-3">
+                    ${buttonHtml}
+                    ${rantButton}
+                </div>
+            `;
+            // --- 底部按鈕區塊結束 ---
 
             container.innerHTML = detailsHtml;
 
-            // 顯示 Modal 並觸發動畫
+            // 顯示 Modal 並觸發動畫 (略)
             modal.classList.remove('hidden');
             setTimeout(() => {
                  card.classList.remove('translate-y-full');
             }, 10);
             
-            // 修正：確保 modal 捲動到頂部
             card.scrollTop = 0;
         }
 
 
-        // === 工具函式 (樣式調整，保持不變) ===
+        // === 工具函式 (保持不變) ===
         function getDotBorderColor(t) {
             return ({ flight:'border-theme-accent', ski:'border-theme-accent' }[t] || 'border-theme-line');
         }
 
-        // === Modal Controls (保持不變) ===
         function showDriverRant(text) {
             const quote = text || driverRants[Math.floor(Math.random() * driverRants.length)];
             document.getElementById('driver-quote').innerText = `"${quote}"`;
@@ -456,7 +508,6 @@
             if (id === 'modal-event-detail') {
                 const card = document.getElementById('event-detail-card');
                 card.classList.add('translate-y-full');
-                 // 等待動畫結束後再隱藏
                 setTimeout(() => {
                     modal.classList.add('hidden');
                 }, 300);
