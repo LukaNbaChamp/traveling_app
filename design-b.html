@@ -139,9 +139,9 @@
 
 
     <script>
-        // === 資料中心 (保持完整，參照上一個回答的 Day 1-Day 9 資料) ===
+        // === 資料中心 (已整合精簡後的 Day 3, Day 5, Day 6 內容) ===
         const tripData = [
-            // Day 1: 1/17 (六) - 保持不變 (完整內容)
+            // Day 1: 1/17 (六) - (完整內容，保持不變)
             {
                 date: "1/17", day: "Day 1", week: "六", city: "Takayama", weatherCity: "Takayama",
                 events: [
@@ -185,50 +185,86 @@
                     }
                 ]
             },
-            // Day 2: 1/18 (日) - 保持不變
+            // Day 2: 1/18 (日) - (保持不變)
             {
                 date: "1/18", day: "Day 2", week: "日", city: "Shirakawa", weatherCity: "Gujo",
                 events: [
                     { time: "05:00", title: "起床", type: "other", categoryEN: "OTHER", desc: "早起痛苦但值得" },
                     { time: "06:00", title: "出發前往 白川鄉", type: "car", categoryEN: "DRIVE", desc: "車程約 1 小時" },
-                    // 注意：這裡的 link 是一個簡短網址，我們假設它是地圖連結，讓它走地圖按鈕。
                     { time: "07:00", title: "白川鄉合掌村", type: "sight", categoryEN: "SIGHTSEEING", desc: "世界遺產 / 拍照", link: "https://goo.gl/maps/R3g7e8J9vYg8J7k9" },
                 ]
             },
             
-            // Day 3 (Placeholder)
+            // Day 3: 1/19 (一) - 【已精簡】金澤行程
             {
                 date: "1/19", day: "Day 3", week: "一", city: "Kanazawa", weatherCity: "Kanazawa",
                 events: [
-                    { time: "09:00", title: "【🚧 請填寫】金澤行程", type: "sight", categoryEN: "SIGHTSEEING", desc: "請補上金澤的景點，例如兼六園或近江町市場" },
+                    { 
+                        time: "10:00", title: "近江町市場 (午餐)", type: "food", categoryEN: "FOOD", 
+                        desc: "金澤的廚房！必吃海鮮丼飯。", 
+                        address: "石川県金沢市上近江町50",
+                        details: [
+                            { title: "停車/交通", content: "停在「市營近江町停車場」。市場離車站約 15 分鐘腳程，建議搭車前往。" },
+                            { title: "市場必吃", content: "必吃新鮮海鮮丼飯、現烤海膽/牡蠣。人氣店中午前人多，要提早。" },
+                        ]
+                    },
+                    { 
+                        time: "14:00", title: "兼六園", type: "sight", categoryEN: "SIGHTSEEING", 
+                        desc: "日本三大名園之首，欣賞冬季雪吊。", 
+                        address: "石川県金沢市兼六町１",
+                        details: [
+                            { title: "兼六園冬季", content: "冬季特有「雪吊」奇景，保護樹木。重點看徽軫燈籠與霞池雪景。" },
+                            { title: "門票/時間", content: "成人門票 320 日圓。注意冬季開閉園時間。" },
+                        ]
+                    },
                 ]
             },
             
-            // Day 4: 1/20 (二) - 保持不變
+            // Day 4: 1/20 (二) - (保持不變)
             {
                 date: "1/20", day: "Day 4", week: "二", city: "Tsugaike", weatherCity: "Otari",
                 events: [
-                    // 注意：這個 link 是一個外部網站，我們會為它生成兩個按鈕 (網站 + 地圖)
                     { time: "09:00", title: "栂池高原滑雪場", type: "ski", categoryEN: "SKI RESORT", desc: "初學者友善 / 鐘鳴之丘", link: "https://www.tsugaike.gr.jp/", address: "長野県北安曇郡小谷村千国乙" },
                 ]
             },
             
-            // Day 5 (Placeholder)
+            // Day 5: 1/21 (三) - 【已精簡】白馬滑雪行程
             {
                 date: "1/21", day: "Day 5", week: "三", city: "Hakuba", weatherCity: "Hakuba",
                 events: [
-                    { time: "09:00", title: "【🚧 請填寫】白馬滑雪行程", type: "ski", categoryEN: "SKI RESORT", desc: "請補上白馬地區的第二個雪場或自由活動" },
+                    { 
+                        time: "09:00", title: "白馬五龍滑雪場 (Hakuba Goryu)", type: "ski", categoryEN: "SKI RESORT", 
+                        desc: "中高級首選，但山腳有平緩區。可通往 Hakuba 47。",
+                        address: "長野県北安曇郡白馬村神城22184-10",
+                        details: [
+                            { title: "雪場簡介", content: "與 Hakuba 47 共通雪票。適合中高級玩家，但山腳 Toomi 區有寬敞平緩區可練習。" },
+                            { title: "新手區", content: "推薦 Toomi 或 Iimori 練習區。Iimori 區域設有家庭樂園。" },
+                            { title: "服務/夜滑", content: "滑雪中心 Escal Plaza 有 24 小時櫃台/便利店。此處可夜滑 (18:00~21:30)。" },
+                            { title: "高階提醒", content: "山頂 Alps-daira 雪質好，但雪道最大 35 度陡坡，請注意安全。" },
+                        ]
+                    },
                 ]
             },
 
-            // Day 6: 1/22 (四) - 保持不變
+            // Day 6: 1/22 (四) - 【已精簡】戶隱神社 / 野尻湖
             {
                 date: "1/22", day: "Day 6", week: "四", city: "Nojiri", weatherCity: "Nagano",
                 events: [
-                    { time: "11:00", title: "戶隱神社 / 野尻湖", type: "sight", categoryEN: "SIGHTSEEING", desc: "釣魚 / 桑拿 🧖", secret: "找桑拿蒸一下做愛 🎣🧖♨️" },
+                    { 
+                        time: "11:00", title: "戶隱神社 / 野尻湖", type: "sight", categoryEN: "SIGHTSEEING", 
+                        desc: "雪中參拜杉林，欣賞野尻湖冬景。", 
+                        secret: "找桑拿蒸一下做愛 🎣🧖♨️",
+                        address: "長野県長野市戸隠3501 (中社)",
+                        details: [
+                            { title: "奧社參拜", content: "參拜奧社，看四百年巨杉林參道。冬季景觀壯觀，但奧社可能關閉。" },
+                            { title: "裝備提醒", content: "參道積雪深且結冰，強烈建議穿冰爪 (Ice Cleats) 並備妥防水保暖裝備。" },
+                            { title: "戶隱蕎麥麵", content: "日本三大蕎麥麵產地之一。推薦品嚐當地特色蕎麥麵。" },
+                            { title: "野尻湖", content: "雪況許可，可搭纜車至野尻湖 Terrace，在雪中賞景喝咖啡。" },
+                        ]
+                    },
                 ]
             },
-            // Day 7: 1/23 (五) - 保持不變
+            // Day 7: 1/23 (五) - (保持不變)
             {
                 date: "1/23", day: "Day 7", week: "五", city: "Jigokudani", weatherCity: "Nagano",
                 events: [
@@ -236,7 +272,7 @@
                 ]
             },
             
-            // Day 8 (Placeholder)
+            // Day 8: 1/24 (六) - (Placeholder)
             {
                 date: "1/24", day: "Day 8", week: "六", city: "Nagoya", weatherCity: "Nagoya",
                 events: [
@@ -244,7 +280,7 @@
                 ]
             },
 
-            // Day 9 (Placeholder)
+            // Day 9: 1/25 (日) - (Placeholder)
             {
                 date: "1/25", day: "Day 9", week: "日", city: "Nagoya", weatherCity: "Nagoya",
                 events: [
@@ -263,7 +299,7 @@
             "後座的，不要再吃東西了，掉屑屑很難清！"
         ];
         
-        // 【新增工具函式】 根據 URL 猜測網站名稱
+        // 【新增工具函式】 根據 URL 猜測網站名稱 (保持不變)
         function guessDomainName(url) {
             if (!url) return '網站';
             try {
@@ -272,14 +308,13 @@
                 if (domain.includes('goo.gl/maps') || domain.includes('google.com/maps')) return 'Google Maps';
                 if (domain.includes('gr.jp')) return '日本官網';
                 const parts = domain.split('.');
-                // 嘗試取出主域名 (例如 apple.com -> apple)
                 return parts.length > 2 ? parts[parts.length - 2] : parts[0] || '網站';
             } catch (e) {
                 return '連結網站';
             }
         }
 
-        // === 核心邏輯 (僅保留) ===
+        // === 核心邏輯 (保持不變) ===
         let currentDayIdx = 0;
 
         function init() {
@@ -360,7 +395,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // === 開啟景點詳細 Modal (主要修正區) ===
+        // === 開啟景點詳細 Modal (保持不變) ===
         function openEventDetail(dayIdx, eventIdx) {
             const ev = tripData[dayIdx].events[eventIdx];
             const modal = document.getElementById('modal-event-detail');
@@ -425,7 +460,7 @@
                 </div>
             `;
 
-            // --- 【修正 2 & 3: 底部按鈕區塊】 ---
+            // --- 底部按鈕區塊 (維持修正後的邏輯) ---
             
             const mapSearchUrl = ev.address 
                 ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.address)}`
@@ -439,12 +474,12 @@
                 
                 // 如果是外部網站連結 (不是地圖連結)
                 if (domainName !== 'Google Maps') {
-                    // 按鈕 A: 外部網站按鈕 (修正 2)
+                    // 按鈕 A: 外部網站按鈕
                     buttonHtml += `<button onclick="window.open('${ev.link}', '_blank')" class="w-full bg-theme-accent text-white py-4 rounded-full font-bold flex items-center justify-center">
                         <i class="fas fa-external-link-alt mr-2"></i>開啟 ${domainName}
                     </button>`;
                     
-                    // 按鈕 B: 搭配地圖搜索按鈕 (修正 2)
+                    // 按鈕 B: 搭配地圖搜索按鈕
                     if (ev.address || ev.title) {
                         buttonHtml += `<button onclick="window.open('${mapSearchUrl}', '_blank')" class="w-full bg-theme-text text-white py-4 rounded-full font-bold flex items-center justify-center">
                             <i class="fas fa-map-marked-alt mr-2"></i>開啟 Google Maps
