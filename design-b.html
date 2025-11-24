@@ -141,7 +141,9 @@
     <script>
         // === 資料中心 (整合原版資料結構) ===
         // 你的資料結構已經很完整且支援詳細攻略，無需修改。
+        // === 資料中心 (核心邏輯未變，僅新增缺失的 Placeholder 資料) ===
         const tripData = [
+            // Day 1: 1/17 (六) - 保持不變 (完整內容)
             {
                 date: "1/17", day: "Day 1", week: "六", city: "Takayama", weatherCity: "Takayama",
                 events: [
@@ -185,8 +187,8 @@
                     }
                 ]
             },
-            // ... (其餘簡化資料用於示範程式碼運行) ...
-             {
+            // Day 2: 1/18 (日) - 保持不變
+            {
                 date: "1/18", day: "Day 2", week: "日", city: "Shirakawa", weatherCity: "Gujo",
                 events: [
                     { time: "05:00", title: "起床", type: "other", categoryEN: "OTHER", desc: "早起痛苦但值得" },
@@ -194,25 +196,63 @@
                     { time: "07:00", title: "白川鄉合掌村", type: "sight", categoryEN: "SIGHTSEEING", desc: "世界遺產 / 拍照", link: "https://goo.gl/maps/R3g7e8J9vYg8J7k9" },
                 ]
             },
-             {
+            
+            // 🔥 新增 Day 3 (Placeholder)
+            {
+                date: "1/19", day: "Day 3", week: "一", city: "Kanazawa", weatherCity: "Kanazawa",
+                events: [
+                    { time: "09:00", title: "【🚧 請填寫】金澤行程", type: "sight", categoryEN: "SIGHTSEEING", desc: "請補上金澤的景點，例如兼六園或近江町市場" },
+                ]
+            },
+            
+            // Day 4: 1/20 (二) - 保持不變
+            {
                 date: "1/20", day: "Day 4", week: "二", city: "Tsugaike", weatherCity: "Otari",
                 events: [
                     { time: "09:00", title: "栂池高原滑雪場", type: "ski", categoryEN: "SKI RESORT", desc: "初學者友善 / 鐘鳴之丘", link: "https://www.tsugaike.gr.jp/" },
                 ]
             },
-             {
+            
+            // 🔥 新增 Day 5 (Placeholder)
+            {
+                date: "1/21", day: "Day 5", week: "三", city: "Hakuba", weatherCity: "Hakuba",
+                events: [
+                    { time: "09:00", title: "【🚧 請填寫】白馬滑雪行程", type: "ski", categoryEN: "SKI RESORT", desc: "請補上白馬地區的第二個雪場或自由活動" },
+                ]
+            },
+
+            // Day 6: 1/22 (四) - 保持不變
+            {
                 date: "1/22", day: "Day 6", week: "四", city: "Nojiri", weatherCity: "Nagano",
                 events: [
                     { time: "11:00", title: "戶隱神社 / 野尻湖", type: "sight", categoryEN: "SIGHTSEEING", desc: "釣魚 / 桑拿 🧖", secret: "找桑拿蒸一下做愛 🎣🧖♨️" },
                 ]
             },
-             {
+            // Day 7: 1/23 (五) - 保持不變
+            {
                 date: "1/23", day: "Day 7", week: "五", city: "Jigokudani", weatherCity: "Nagano",
                 events: [
                     { time: "14:00", title: "前往 金澤", type: "car", categoryEN: "DRIVE", desc: "長途駕駛開始...", rant: "開去金澤我操你媽你們最好都請我吃飯我開車很累還安排行程操" }
                 ]
             },
+            
+            // 🔥 新增 Day 8 (Placeholder)
+            {
+                date: "1/24", day: "Day 8", week: "六", city: "Nagoya", weatherCity: "Nagoya",
+                events: [
+                    { time: "10:00", title: "【🚧 請填寫】金澤回程至名古屋", type: "car", categoryEN: "DRIVE", desc: "長途駕駛回名古屋市區，準備還車" },
+                ]
+            },
 
+            // 🔥 新增 Day 9 (Placeholder)
+            {
+                date: "1/25", day: "Day 9", week: "日", city: "Nagoya", weatherCity: "Nagoya",
+                events: [
+                    { time: "09:00", title: "還車 (ORIX Rent-A-Car)", type: "car", categoryEN: "TRANSPORT", desc: "檢查油量與車身，確認 ETC 卡歸還" },
+                    { time: "12:00", title: "午餐 / 機場報到", type: "food", categoryEN: "FLIGHT", desc: "中部國際機場 T1" },
+                    { time: "15:00", title: "返台 (MM727)", type: "flight", categoryEN: "FLIGHT", desc: "結束美好的旅程！" },
+                ]
+            },
         ];
 
         const driverRants = [
