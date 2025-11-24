@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#F4F1EA">
+    <title>xx旅行 2026</title>
+    <style>
+        :root {
+            /* Design System: Yufuin no Mori Style */
+            --primary-green: #2F5D50; 
+            --accent-gold: #C5A059;
+            --bg-beige: #F4F1EA;
+            --card-bg: #FFFFFF;
+            --text-dark: #333333;
+            --text-gray: #666666;
+            --danger: #D9534F;
+            --success: #28a745;
+            --radius: 16px;
+            --shadow: 0 4px 20px rgba(47, 93, 80, 0.08);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", sans-serif;
+            background-color: var(--bg-beige);
+            color: var(--text-dark);
+            height: 100vh; overflow: hidden;
+        }
+
+        /* Views & Transitions */
+        .view-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
+            background: var(--bg-beige);
+            transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 10; padding-bottom: 80px; display: none;
+        }
+        .view-container.active { transform: translateX(0); display: block; }
+        .view-container.home-view { transform: none; z-index: 1; display: block; }
+
+        /* Header */
+        .page-header {
+            padding: 50px 20px 15px; background: var(--card-bg);
+            position: sticky; top: 0; z-index: 20;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .back-btn {
+            border: none; background: transparent; color: var(--primary-green);
+            font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 4px;
+        }
+        .page-title { font-size: 18px; font-weight: 700; color: var(--primary-green); }
+
+        /* Components */
+        .hero {
+            height: 280px; position: relative;
+            background: url('https://images.unsplash.com/photo-1542640244-7e67286feb8f?q=80&w=1000') center/cover;
+            border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
+        }
+        .hero::after {
+            content:''; position:absolute; inset:0;
+            background: linear-gradient(to bottom, rgba(47,93,80,0.2), rgba(47,93,80,0.7));
+            border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
+        }
+        .hero-content { position: absolute; bottom: 30px; left: 24px; z-index: 2; color: white; }
+        .hero h1 { margin: 0; font-size: 34px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        
+        .card {
+            background: var(--card-bg); border-radius: var(--radius);
+            padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px;
+        }
+
+        /* Countdown */
+        .countdown-floater {
+            margin: -40px 20px 20px; position: relative; z-index: 5;
+            text-align: center;
+        }
+        .timer-flex { display: flex; justify-content: center; gap: 16px; margin-top: 8px; }
+        .time-box { display: flex; flex-direction: column; }
+        .time-val { font-size: 24px; font-weight: 800; color: var(--primary-green); line-height: 1; }
+        .time-lbl { font-size: 11px; color: var(--text-gray); }
+
+        /* Menu Grid */
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 20px 20px; }
+        .menu-btn {
+            background: var(--card-bg); border-radius: var(--radius); padding: 20px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 140px; box-shadow: var(--shadow); transition: transform 0.1s;
+        }
+        .menu-btn:active { transform: scale(0.97); }
+        .menu-icon {
+            width: 50px; height: 50px; background: rgba(47,93,80,0.1); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+            color: var(--primary-green);
+        }
+        
+        /* Timeline Styles */
+        .timeline-day { margin: 24px 20px 10px; font-weight: 700; color: var(--accent-gold); letter-spacing: 1px; }
+        .event-item {
+            margin: 0 20px 16px; background: var(--card-bg); padding: 16px; border-radius: 12px;
+            border-left: 4px solid var(--primary-green); box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .event-time { font-size: 13px; color: var(--primary-green); font-weight: 800; margin-bottom: 4px; }
+        .event-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+        .event-desc { font-size: 14px; color: #555; line-height: 1.5; white-space: pre-wrap; }
+        .highlight-alert {
+            background: #fff3cd; color: #856404; padding: 8px; border-radius: 6px;
+            margin-top: 8px; font-size: 13px; border: 1px solid #ffeeba;
+        }
+
+        /* Ski & Table */
+        .price-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+        .price-table th { text-align: left; color: var(--text-gray); padding: 8px 4px; border-bottom: 1px solid #eee; }
+        .price-table td { padding: 8px 4px; border-bottom: 1px solid #eee; }
+        .price-val { font-weight: 700; color: var(--text-dark); }
+        .cheapest { color: var(--danger); font-weight: 800; }
+
+        /* Checklist */
+        .check-group { margin: 20px; }
+        .check-row {
+            display: flex; align-items: center; background: white; padding: 14px;
+            border-radius: 12px; margin-bottom: 10px; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .checkbox {
+            width: 22px; height: 22px; border: 2px solid var(--primary-green); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .checkbox.checked { background: var(--primary-green); }
+        .checkbox.checked::after { content:'✔'; color:white; font-size: 14px; }
+        .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: auto; }
+        .tag-yes { background: #d4edda; color: #155724; }
+        .tag-no { background: #f8d7da; color: #721c24; }
+
+        /* Icon SVG */
+        svg { width: 24px; height: 24px; stroke-width: 2; stroke: currentColor; fill: none; }
+    </style>
+</head>
+<body>
+
+    <div id="view-home" class="view-container home-view">
+        <div class="hero">
+            <div class="hero-content">
+                <div style="background:var(--accent-gold); color:var(--primary-green); padding:4px 10px; border-radius:20px; display:inline-block; font-size:12px; font-weight:700; margin-bottom:8px;">JAPAN 2026</div>
+                <h1>xx旅行 2026</h1>
+            </div>
+        </div>
+
+        <div class="card countdown-floater">
+            <div style="font-size:13px; color:#888;">距離 01.17 出發還有</div>
+            <div class="timer-flex" id="timer">
+                <div class="time-box"><span class="time-val" id="t-d">00</span><span class="time-lbl">天</span></div>
+                <div class="time-box"><span class="time-val" id="t-h">00</span><span class="time-lbl">時</span></div>
+                <div class="time-box"><span class="time-val" id="t-m">00</span><span class="time-lbl">分</span></div>
+                <div class="time-box"><span class="time-val" id="t-s">00</span><span class="time-lbl">秒</span></div>
+            </div>
+        </div>
+
+        <div style="padding:0 24px; margin-bottom:10px; font-weight:700; color:var(--primary-green);">旅行儀表板</div>
+        <div class="grid-menu">
+            <div class="menu-btn" onclick="app.nav('view-itinerary')">
+                <div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+                <div style="font-weight:600;">行程總覽</div>
+            </div>
+            <div class="menu-btn" onclick="app.nav('view-checklist')">
+                <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div style="font-weight:600;">待辦 & 行李</div>
+            </div>
+            <div class="menu-btn" onclick="app.nav('view-ski')">
+                <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path></svg></div>
+                <div style="font-weight:600;">滑雪情報</div>
+            </div>
+            <div class="menu-btn" onclick="app.nav('view-hotels')">
+                <div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 9v2M16 9v2M8 13v2M16 13v2"></path></svg></div>
+                <div style="font-weight:600;">住宿資訊</div>
+            </div>
+        </div>
+        
+        <div style="padding:0 24px; margin-bottom:10px; font-weight:700; color:var(--primary-green);">快速連結</div>
+        <div style="display:flex; gap:12px; padding:0 24px; overflow-x:auto; padding-bottom:20px;">
+            <a href="https://www.vjw.digital.go.jp/" target="_blank" style="flex:0 0 auto; background:white; padding:10px 16px; border-radius:30px; text-decoration:none; color:var(--primary-green); font-size:13px; font-weight:600; border:1px solid #ddd;">Visit Japan Web</a>
+            <a href="https://www.jorudan.co.jp/" target="_blank" style="flex:0 0 auto; background:white; padding:10px 16px; border-radius:30px; text-decoration:none; color:var(--primary-green); font-size:13px; font-weight:600; border:1px solid #ddd;">乘換案內</a>
+            <a href="https://www.google.com/maps" target="_blank" style="flex:0 0 auto; background:white; padding:10px 16px; border-radius:30px; text-decoration:none; color:var(--primary-green); font-size:13px; font-weight:600; border:1px solid #ddd;">Google Maps</a>
+        </div>
+    </div>
+
+    <div id="view-itinerary" class="view-container">
+        <div class="page-header">
+            <button class="back-btn" onclick="app.back()">❮ 返回</button>
+            <div class="page-title">詳細行程</div>
+            <div style="width:40px"></div>
+        </div>
+        <div id="itinerary-content"></div>
+    </div>
+
+    <div id="view-checklist" class="view-container">
+        <div class="page-header">
+            <button class="back-btn" onclick="app.back()">❮ 返回</button>
+            <div class="page-title">準備清單</div>
+            <div style="width:40px"></div>
+        </div>
+        <div class="check-group">
+            <h3 style="margin-left:4px; color:var(--text-gray);">待辦事項 (To-Do)</h3>
+            <div id="todo-list"></div>
+        </div>
+        <div class="check-group">
+            <h3 style="margin-left:4px; color:var(--text-gray);">行李檢查 (Packing)</h3>
+            <div id="packing-list"></div>
+        </div>
+    </div>
+
+    <div id="view-ski" class="view-container">
+        <div class="page-header">
+            <button class="back-btn" onclick="app.back()">❮ 返回</button>
+            <div class="page-title">滑雪情報</div>
+            <div style="width:40px"></div>
+        </div>
+        <div style="padding:20px;">
+            <div class="card">
+                <h3 style="margin:0 0 10px 0; font-size:16px;">教練比價</h3>
+                <div id="ski-lessons"></div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin:0 0 10px 0; font-size:16px;">裝備租借：Woody vs 日和</h3>
+                <table class="price-table">
+                    <thead><tr><th>品項</th><th>Woody</th><th>日和</th></tr></thead>
+                    <tbody id="rental-table"></tbody>
+                </table>
+                <div style="margin-top:10px; font-size:12px; color:#888;">* 價格單位：日圓 (部分套裝可能含不同天數請確認)</div>
+            </div>
+            
+            <div class="card">
+                <h3 style="margin:0 0 10px 0; font-size:16px;">雪場纜車票 (參考)</h3>
+                <ul style="padding-left:20px; margin:0; font-size:14px; color:#555;">
+                    <li>白馬谷全山 (1日): ¥9,000</li>
+                    <li>五龍47 (1日): ¥7,500</li>
+                    <li>栂池高原 (1日): ¥6,400</li>
+                    <li>岩岳 (1日): ¥5,500</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-hotels" class="view-container">
+        <div class="page-header">
+            <button class="back-btn" onclick="app.back()">❮ 返回</button>
+            <div class="page-title">住宿資訊</div>
+            <div style="width:40px"></div>
+        </div>
+        <div id="hotel-list" style="padding:20px;"></div>
+    </div>
+
+    <script>
+        // --- 核心資料庫 (已修復 Google Maps 連結) ---
+        const db = {
+            itinerary: [
+                { date: "1/17 (六)", time: "02:55", title: "起飛 MM722", desc: "桃園機場第一航廈" },
+                { date: "1/17 (六)", time: "06:45", title: "抵達中部國際機場", desc: "" },
+                { date: "1/17 (六)", time: "08:00", title: "租車 ORIX", desc: "取車出發" },
+                { date: "1/17 (六)", time: "12:00", title: "高山老街", desc: "吃午餐、逛街" },
+                { date: "1/17 (六)", time: "17:00", title: "CHECK IN - Backpackers JINYA", desc: "高山市" },
+                
+                { date: "1/18 (日)", time: "07:00", title: "Alps街道平湯、大滝、彌豆子", desc: "" },
+                { date: "1/18 (日)", time: "09:00", title: "白川合掌屋", desc: "" },
+
+                { date: "1/21 (三)", time: "17:00", title: "CHECK IN - 休暇村妙高", desc: "晚上泡溫泉雜交派對睡到爽" },
+
+                { date: "1/22 (四)", time: "09:00", title: "吃早餐", desc: "" },
+                { date: "1/22 (四)", time: "16:00", title: "前往地獄谷", desc: "看猴子泡溫泉" },
+                { date: "1/22 (四)", time: "17:00", title: "CHECK IN - 大丸屋", desc: "晚上泡溫泉雜交派對（可以吃飯店最爽💖）" },
+
+                { date: "1/23 (五)", time: "07:00", title: "吃早餐", desc: "" },
+
+                { date: "1/24 (六)", time: "16:00", title: "前往名古屋", desc: "開車去名古屋我真的覺得你們要給我錢或是給我操我他媽超累超忙還充當翻譯駕駛導遊滑雪教練廚師我幹你娘" },
+
+                { date: "1/25 (日)", time: "22:45", title: "起飛 MM723", desc: "回家囉" }
+            ],
+            todos: [
+                { item: "租車預約 (ORIX)", done: true },
+                { item: "Visit Japan Web", done: false },
+                { item: "ESIM 購買", done: false },
+                { item: "滑雪教練預約 (栂池)", done: false },
+                { item: "旅遊保險", done: false }
+            ],
+            packing: [
+                "護照 & 駕照 (日文譯本)", "機票 & 住宿憑證", "現金 (日幣)", "信用卡 (JCB/Visa)",
+                "ESIM / 網卡", "充電器 & 行動電源", "個人藥品", "滑雪襪 (厚)", "發熱衣/褲",
+                "保養品 (保濕很重要)", "牙刷/牙膏"
+            ],
+            ski_lessons: [
+                { name: "Snowboard (2) - Lydia", price: "15,000 TWD", loc: "岩越/姆持 (全日)" },
+                { name: "Snowboard (1) - Tyson", price: "18,000 TWD", loc: "岩越/姆持 (全日)" },
+                { name: "Snowboard (3) - Lydia", price: "12,000 TWD", loc: "岩越/姆持 (半日)" },
+                { name: "KLOOK 私人教練", price: "15,943 TWD", loc: "姆持/Cortina (全日)" },
+                { name: "TOOMI 滑雪學校", price: "57,000 JPY", loc: "五龍 (全日) *母持+1萬" }
+            ],
+            rentals: [
+                { item: "護腕", woody: "1,000", hiyori: "1,600", best: "woody" },
+                { item: "毛帽", woody: "1,100", hiyori: "-", best: "woody" },
+                { item: "手套", woody: "1,100", hiyori: "-", best: "woody" },
+                { item: "安全帽", woody: "2,400", hiyori: "2,500", best: "woody" },
+                { item: "眼鏡", woody: "1,100", hiyori: "-", best: "woody" },
+                { item: "雪衣雪褲", woody: "7,000", hiyori: "8,500", best: "woody" },
+                { item: "滑雪套裝", woody: "10,200", hiyori: "9,500", best: "hiyori" }
+            ],
+            hotels: [
+                /* 已修復：全部改為可用的 Google Maps 搜尋連結 */
+                { name: "Backpackers JINYA", loc: "高山", link: "https://www.google.com/maps/search/?api=1&query=Backpackers+Jinya+Takayama" },
+                { name: "休暇村妙高 (Kyukamura)", loc: "妙高", note: "RunRun", link: "https://www.google.com/maps/search/?api=1&query=Kyukamura+Myoko" },
+                { name: "大丸屋 (Daimaruya)", loc: "涉溫泉", note: "貸切露天", link: "https://www.google.com/maps/search/?api=1&query=Daimaruya+Ryokan+Shibu+Onsen" },
+                { name: "旅館岐山 (Ryokan Gizan)", loc: "奧飛驒", note: "烤火派對", link: "https://www.google.com/maps/search/?api=1&query=Ryokan+Gizan+Okuhida" }
+            ]
+        };
+
+        // --- App 邏輯 ---
+        const app = {
+            init: () => {
+                app.renderItinerary();
+                app.renderChecklist();
+                app.renderSki();
+                app.renderHotels();
+                app.countdown();
+            },
+            nav: (viewId) => {
+                document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+                document.getElementById(viewId).classList.add('active');
+                window.scrollTo(0,0);
+            },
+            back: () => {
+                document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+                document.getElementById('view-home').classList.add('active');
+            },
+            renderItinerary: () => {
+                const container = document.getElementById('itinerary-content');
+                let html = '';
+                let lastDate = '';
+                
+                db.itinerary.forEach(item => {
+                    if(item.date !== lastDate) {
+                        html += `<div class="timeline-day">${item.date}</div>`;
+                        lastDate = item.date;
+                    }
+                    // 偵測關鍵字顯示 Highlight
+                    let descHtml = item.desc;
+                    if(item.desc.includes("雜交") || item.desc.includes("幹你娘") || item.desc.includes("派對")) {
+                        descHtml = `<div class="highlight-alert">${item.desc}</div>`;
+                    } else if (item.desc) {
+                        descHtml = `<div class="event-desc">${item.desc}</div>`;
+                    }
+
+                    html += `
+                        <div class="event-item">
+                            <div class="event-time">${item.time}</div>
+                            <div class="event-title">${item.title}</div>
+                            ${descHtml}
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            },
+            renderChecklist: () => {
+                // To-Do
+                const todoContainer = document.getElementById('todo-list');
+                todoContainer.innerHTML = db.todos.map(t => `
+                    <div class="check-row" onclick="this.querySelector('.checkbox').classList.toggle('checked')">
+                        <div class="checkbox ${t.done ? 'checked' : ''}"></div>
+                        <div style="font-weight:500;">${t.item}</div>
+                        <span class="tag ${t.done ? 'tag-yes' : 'tag-no'}">${t.done ? '完成' : '未完成'}</span>
+                    </div>
+                `).join('');
+
+                // Packing
+                const packContainer = document.getElementById('packing-list');
+                packContainer.innerHTML = db.packing.map(item => `
+                    <div class="check-row" onclick="this.querySelector('.checkbox').classList.toggle('checked')">
+                        <div class="checkbox"></div>
+                        <div style="font-size:14px;">${item}</div>
+                    </div>
+                `).join('');
+            },
+            renderSki: () => {
+                // Lessons
+                document.getElementById('ski-lessons').innerHTML = db.ski_lessons.map(l => `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:8px;">
+                        <div>
+                            <div style="font-weight:700;">${l.name}</div>
+                            <div style="font-size:12px; color:#666;">${l.loc}</div>
+                        </div>
+                        <div style="color:#d9534f; font-weight:700;">${l.price}</div>
+                    </div>
+                `).join('');
+
+                // Rentals
+                document.getElementById('rental-table').innerHTML = db.rentals.map(r => `
+                    <tr>
+                        <td>${r.item}</td>
+                        <td class="${r.best==='woody'?'cheapest':''}">${r.woody}</td>
+                        <td class="${r.best==='hiyori'?'cheapest':''}">${r.hiyori}</td>
+                    </tr>
+                `).join('');
+            },
+            renderHotels: () => {
+                document.getElementById('hotel-list').innerHTML = db.hotels.map(h => `
+                    <div class="card" onclick="window.open('${h.link}')">
+                        <div style="font-weight:700; font-size:16px;">${h.name}</div>
+                        <div style="color:#666; font-size:13px; margin:4px 0;">📍 ${h.loc} ${h.note ? ' · ' + h.note : ''}</div>
+                        <div style="color:var(--primary-green); font-size:12px; font-weight:600; text-align:right;">開啟地圖 ></div>
+                    </div>
+                `).join('');
+            },
+            countdown: () => {
+                const target = new Date("2026-01-17T00:00:00").getTime();
+                setInterval(() => {
+                    const now = new Date().getTime();
+                    const diff = target - now;
+                    if(diff < 0) return;
+                    document.getElementById('t-d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    document.getElementById('t-h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    document.getElementById('t-m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    document.getElementById('t-s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+                }, 1000);
+            }
+        };
+
+        // Start App
+        app.init();
+    </script>
+</body>
+</html>
