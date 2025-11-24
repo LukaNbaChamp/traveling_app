@@ -6,7 +6,7 @@
     <title>名古屋滑雪 2026 ❄️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght+500;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -49,7 +49,7 @@
     <div class="fixed top-0 w-full z-40 glass transition-all duration-300" id="top-bar">
         <div class="flex justify-between items-end px-5 py-4">
             <div>
-                <p class="text-xs text-theme-muted tracking-[0.2em] uppercase mb-1">Family Trip</p>
+                <p class="text-xs text-theme-muted tracking-[0.2em] uppercase mb-1">VERSION: 2025-11-24 14:07:00</p>
                 <h1 class="text-2xl font-bold text-theme-text">名古屋滑雪 <span class="text-base font-normal ml-1">2026</span></h1>
             </div>
             <div class="flex items-center space-x-3">
@@ -139,7 +139,7 @@
 
 
     <script>
-        // === 資料中心 (已整合精簡後的 Day 3, Day 5, Day 6 內容) ===
+        // === 資料中心 (已整合完整版 Day 3, Day 5, Day 6 內容) ===
         const tripData = [
             // Day 1: 1/17 (六) - (完整內容，保持不變)
             {
@@ -195,7 +195,7 @@
                 ]
             },
             
-            // Day 3: 1/19 (一) - 【已精簡】金澤行程
+            // Day 3: 1/19 (一) - 【已恢復完整內容】金澤行程
             {
                 date: "1/19", day: "Day 3", week: "一", city: "Kanazawa", weatherCity: "Kanazawa",
                 events: [
@@ -204,8 +204,10 @@
                         desc: "金澤的廚房！必吃海鮮丼飯。", 
                         address: "石川県金沢市上近江町50",
                         details: [
-                            { title: "停車/交通", content: "停在「市營近江町停車場」。市場離車站約 15 分鐘腳程，建議搭車前往。" },
-                            { title: "市場必吃", content: "必吃新鮮海鮮丼飯、現烤海膽/牡蠣。人氣店中午前人多，要提早。" },
+                            { title: "【停車與交通】", content: "金澤市區停車場選擇多，推薦停在市營的「近江町市場停車場」。市場距離金澤車站步行約 15 分鐘，建議輕裝前往。若帶行李，搭計程車可能更划算。" },
+                            { title: "【市場必吃】", content: "近江町市場被譽為「金澤的廚房」，一定要在早上或中午前來。必吃：新鮮的**海鮮丼飯**、**現烤海膽/牡蠣**，以及當地特色的**金澤咖哩**。許多人氣店鋪（如海鮮丼）在中午前就會大排長龍，建議早點出發。" },
+                            { title: "【兼六園看點】", content: "日本三大名園之首，**冬季會進行「雪吊」**（用繩子保護樹木不被積雪壓斷），是金澤冬季特有的景觀。重點觀賞池中央的**徽軫燈籠**及環繞**霞池**的雪景。" },
+                            { title: "【門票提醒】", content: "兼六園 18 歲以上成人門票約 320 日圓，65 歲以上長者免費入園。若有計畫參加夜間點燈活動，需注意官網公告時間。" },
                         ]
                     },
                     { 
@@ -213,8 +215,10 @@
                         desc: "日本三大名園之首，欣賞冬季雪吊。", 
                         address: "石川県金沢市兼六町１",
                         details: [
-                            { title: "兼六園冬季", content: "冬季特有「雪吊」奇景，保護樹木。重點看徽軫燈籠與霞池雪景。" },
-                            { title: "門票/時間", content: "成人門票 320 日圓。注意冬季開閉園時間。" },
+                            { title: "【停車與交通】", content: "金澤市區停車場選擇多，推薦停在市營的「近江町市場停車場」。市場距離金澤車站步行約 15 分鐘，建議輕裝前往。若帶行李，搭計程車可能更划算。" },
+                            { title: "【市場必吃】", content: "近江町市場被譽為「金澤的廚房」，一定要在早上或中午前來。必吃：新鮮的**海鮮丼飯**、**現烤海膽/牡蠣**，以及當地特色的**金澤咖哩**。許多人氣店鋪（如海鮮丼）在中午前就會大排長龍，建議早點出發。" },
+                            { title: "【兼六園看點】", content: "日本三大名園之首，**冬季會進行「雪吊」**（用繩子保護樹木不被積雪壓斷），是金澤冬季特有的景觀。重點觀賞池中央的**徽軫燈籠**及環繞**霞池**的雪景。" },
+                            { title: "【門票提醒】", content: "兼六園 18 歲以上成人門票約 320 日圓，65 歲以上長者免費入園。若有計畫參加夜間點燈活動，需注意官網公告時間。" },
                         ]
                     },
                 ]
@@ -228,7 +232,7 @@
                 ]
             },
             
-            // Day 5: 1/21 (三) - 【已精簡】白馬滑雪行程
+            // Day 5: 1/21 (三) - 【已恢復完整內容】白馬滑雪行程
             {
                 date: "1/21", day: "Day 5", week: "三", city: "Hakuba", weatherCity: "Hakuba",
                 events: [
@@ -237,16 +241,16 @@
                         desc: "中高級首選，但山腳有平緩區。可通往 Hakuba 47。",
                         address: "長野県北安曇郡白馬村神城22184-10",
                         details: [
-                            { title: "雪場簡介", content: "與 Hakuba 47 共通雪票。適合中高級玩家，但山腳 Toomi 區有寬敞平緩區可練習。" },
-                            { title: "新手區", content: "推薦 Toomi 或 Iimori 練習區。Iimori 區域設有家庭樂園。" },
-                            { title: "服務/夜滑", content: "滑雪中心 Escal Plaza 有 24 小時櫃台/便利店。此處可夜滑 (18:00~21:30)。" },
-                            { title: "高階提醒", content: "山頂 Alps-daira 雪質好，但雪道最大 35 度陡坡，請注意安全。" },
+                            { title: "【雪場特色】", content: "白馬五龍雪場腹地寬廣，與隔壁的 **Hakuba 47** 雪場相連通，持共通雪票可滑兩個雪場。雪道多樣，號稱是**中高級滑雪者首選**，但山腳下的 Toomi 區有寬敞的緩斜面，適合初學者練習。" },
+                            { title: "【初學者區域】", content: "推薦在 **Toomi** 或 **Iimori** 區域練習，坡度平緩且纜車配置良好。Iimori 區域設有家庭樂園，適合帶小朋友的家庭。" },
+                            { title: "【亮點服務】", content: "滑雪中心 **Escal Plaza** 內有 24 小時服務櫃台、餐廳、休息室、租借場地和便利商店。此處提供夜間滑雪 (夜滑時間約 18:00~21:30)。" },
+                            { title: "【雪道提醒】", content: "五龍山頂的 **Alps-daira** 區雪質極佳，但雪道較陡（最大坡度 35 度）且有非壓雪區，適合高階玩家。初學者若從山頂下山，須特別小心。" },
                         ]
                     },
                 ]
             },
 
-            // Day 6: 1/22 (四) - 【已精簡】戶隱神社 / 野尻湖
+            // Day 6: 1/22 (四) - 【已恢復完整內容】戶隱神社 / 野尻湖
             {
                 date: "1/22", day: "Day 6", week: "四", city: "Nojiri", weatherCity: "Nagano",
                 events: [
@@ -256,10 +260,10 @@
                         secret: "找桑拿蒸一下做愛 🎣🧖♨️",
                         address: "長野県長野市戸隠3501 (中社)",
                         details: [
-                            { title: "奧社參拜", content: "參拜奧社，看四百年巨杉林參道。冬季景觀壯觀，但奧社可能關閉。" },
-                            { title: "裝備提醒", content: "參道積雪深且結冰，強烈建議穿冰爪 (Ice Cleats) 並備妥防水保暖裝備。" },
-                            { title: "戶隱蕎麥麵", content: "日本三大蕎麥麵產地之一。推薦品嚐當地特色蕎麥麵。" },
-                            { title: "野尻湖", content: "雪況許可，可搭纜車至野尻湖 Terrace，在雪中賞景喝咖啡。" },
+                            { title: "【冬季參拜】", content: "戶隱神社由五社組成，最著名的是**奧社**參道兩側的**四百年樹齡巨杉林**。雖然冬季奧社可能關閉，但杉木參道在積雪覆蓋下景色極為壯觀。" },
+                            { title: "【雪地裝備】", content: "參道積雪很厚且部分階梯結冰，**強烈建議**穿著防水、保暖的衣物，並**準備簡易冰爪 (Ice Cleats)**，避免滑倒。從中社走到奧社來回約需 2 小時。" },
+                            { title: "【必吃美食】", content: "戶隱是日本三大蕎麥麵產地之一，推薦在中社或奧社周邊品嚐當地特有的**戶隱蕎麥麵**（特色是將麵捲成五捲上菜）。" },
+                            { title: "【野尻湖 (非滑雪)】", content: "若雪況許可，可搭乘斑尾高原的纜車上山到 **野尻湖 Terrace**，在雪中享受咖啡和暖爐，並俯瞰野尻湖的冬季美景。記得穿著防水雪褲。"},
                         ]
                     },
                 ]
