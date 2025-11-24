@@ -151,7 +151,7 @@
     </div>
 
     <script>
-        // === 資料中心 ===
+        // === 資料中心 (Links Updated to Real Google Maps Queries) ===
         const tripData = [
             {
                 date: "1/17",
@@ -161,9 +161,9 @@
                 weatherCity: "Takayama",
                 events: [
                     { time: "06:45", title: "抵達 名古屋 (MM722)", type: "flight", desc: "中部國際機場 T1 / 樂桃航空" },
-                    { time: "08:00", title: "取車 (ORIX Rent-A-Car)", type: "car", desc: "備妥駕照譯本", ps: "オリックスレンタカー予約", link: "https://goo.gl/maps/example" },
-                    { time: "12:00", title: "高山老街 午餐", type: "food", desc: "飛驒牛握壽司 / 逛街", link: "https://maps.app.goo.gl/example" },
-                    { time: "15:00", title: "Check-in: 飛驒花里之湯", type: "hotel", desc: "高山櫻庵 (暫定)", ps: "チェックインお願いします" }
+                    { time: "08:00", title: "取車 (ORIX Rent-A-Car)", type: "car", desc: "備妥駕照譯本", ps: "オリックスレンタカー予約", link: "https://www.google.com/maps/search/?api=1&query=ORIX+Rent-A-Car+Chubu+Airport" },
+                    { time: "12:00", title: "高山老街 午餐", type: "food", desc: "飛驒牛握壽司 / 逛街", link: "https://www.google.com/maps/search/?api=1&query=Takayama+Old+Town" },
+                    { time: "15:00", title: "Check-in: 飛驒花里之湯", type: "hotel", desc: "高山櫻庵 (暫定)", ps: "チェックインお願いします", link: "https://www.google.com/maps/search/?api=1&query=Takayama+Ouan" }
                 ]
             },
             {
@@ -175,8 +175,8 @@
                 events: [
                     { time: "05:00", title: "起床", type: "other", desc: "早起痛苦但值得" },
                     { time: "06:00", title: "出發前往 白川鄉", type: "car", desc: "車程約 1 小時" },
-                    { time: "07:00", title: "白川鄉合掌村", type: "sight", desc: "世界遺產 / 拍照", link: "https://maps.app.goo.gl/example" },
-                    { time: "12:00", title: "前往 奧飛驒平湯", type: "drive", desc: "溫泉區移動" }
+                    { time: "07:00", title: "白川鄉合掌村", type: "sight", desc: "世界遺產 / 拍照", link: "https://www.google.com/maps/search/?api=1&query=Shirakawa-go" },
+                    { time: "12:00", title: "前往 奧飛驒平湯", type: "drive", desc: "溫泉區移動", link: "https://www.google.com/maps/search/?api=1&query=Hirayu+Onsen" }
                 ]
             },
             {
@@ -186,8 +186,8 @@
                 city: "Okuhida",
                 weatherCity: "Takayama",
                 events: [
-                    { time: "10:00", title: "新穗高纜車", type: "sight", desc: "觀景台吃草莓冰淇淋 🍦", secret: "纜車上去觀景台做愛...末班車16:15要注意" },
-                    { time: "15:00", title: "前往 松本 (Matsumoto)", type: "drive", desc: "移動日" }
+                    { time: "10:00", title: "新穗高纜車", type: "sight", desc: "觀景台吃草莓冰淇淋 🍦", secret: "纜車上去觀景台做愛...末班車16:15要注意", link: "https://www.google.com/maps/search/?api=1&query=Shinhotaka+Ropeway" },
+                    { time: "15:00", title: "前往 松本 (Matsumoto)", type: "drive", desc: "移動日", link: "https://www.google.com/maps/search/?api=1&query=Matsumoto+Station" }
                 ]
             },
             {
@@ -197,7 +197,7 @@
                 city: "Tsugaike",
                 weatherCity: "Otari",
                 events: [
-                    { time: "09:00", title: "栂池高原滑雪場", type: "ski", desc: "初學者友善 / 鐘鳴之丘", link: "https://www.tsugaike.gr.jp/" },
+                    { time: "09:00", title: "栂池高原滑雪場", type: "ski", desc: "初學者友善 / 鐘鳴之丘", link: "https://www.google.com/maps/search/?api=1&query=Tsugaike+Mountain+Resort" },
                     { time: "12:00", title: "午餐 & 休息", type: "food", desc: "雪場食堂" },
                     { time: "18:00", title: "晚餐", type: "food", desc: "周邊餐廳" }
                 ]
@@ -209,7 +209,7 @@
                 city: "Hakuba",
                 weatherCity: "Hakuba",
                 events: [
-                    { time: "09:00", title: "白馬岩岳 Mountain Harbor", type: "ski", desc: "絕美鞦韆 / City Bakery", link: "https://iwatake-mountain-resort.com/" },
+                    { time: "09:00", title: "白馬岩岳 Mountain Harbor", type: "ski", desc: "絕美鞦韆 / City Bakery", link: "https://www.google.com/maps/search/?api=1&query=Hakuba+Iwatake+Mountain+Resort" },
                     { time: "15:00", title: "前往 信濃 (Shinano)", type: "drive", desc: "往北移動" }
                 ]
             },
@@ -220,7 +220,7 @@
                 city: "Nojiri",
                 weatherCity: "Nagano",
                 events: [
-                    { time: "11:00", title: "戶隱神社 / 野尻湖", type: "sight", desc: "釣魚 / 桑拿 🧖", secret: "找桑拿蒸一下做愛 🎣🧖♨️" },
+                    { time: "11:00", title: "戶隱神社 / 野尻湖", type: "sight", desc: "釣魚 / 桑拿 🧖", secret: "找桑拿蒸一下做愛 🎣🧖♨️", link: "https://www.google.com/maps/search/?api=1&query=Togakushi+Shrine" },
                     { time: "16:00", title: "前往 地獄谷區域", type: "drive", desc: "準備明天看猴子" }
                 ]
             },
@@ -231,8 +231,8 @@
                 city: "Jigokudani",
                 weatherCity: "Nagano",
                 events: [
-                    { time: "09:00", title: "地獄谷野猿公苑", type: "sight", desc: "猴子泡溫泉 🐒", link: "https://maps.app.goo.gl/example" },
-                    { time: "14:00", title: "前往 金澤", type: "drive", desc: "長途駕駛開始...", rant: "開去金澤我操你媽你們最好都請我吃飯我開車很累還安排行程操" }
+                    { time: "09:00", title: "地獄谷野猿公苑", type: "sight", desc: "猴子泡溫泉 🐒", link: "https://www.google.com/maps/search/?api=1&query=Jigokudani+Yaen+Koen" },
+                    { time: "14:00", title: "前往 金澤", type: "drive", desc: "長途駕駛開始...", rant: "開去金澤我操你媽你們最好都請我吃飯我開車很累還安排行程操", link: "https://www.google.com/maps/search/?api=1&query=Kanazawa+Station" }
                 ]
             },
             {
@@ -242,9 +242,9 @@
                 city: "Nagoya",
                 weatherCity: "Nagoya",
                 events: [
-                    { time: "10:00", title: "吉卜力公園 / 名古屋市區", type: "sight", desc: "大倉庫 / 逛街", ps: "チケット提示" },
-                    { time: "16:00", title: "開車回名古屋", type: "drive", desc: "市區還車", rant: "開車去名古屋我真的覺得你們要給我錢或是給我操我他媽超累超忙還充當翻譯駕駛導遊滑雪教練廚師我幹你娘" },
-                    { time: "19:00", title: "大須觀音商店街", type: "shop", desc: "最後採買" }
+                    { time: "10:00", title: "吉卜力公園 / 名古屋市區", type: "sight", desc: "大倉庫 / 逛街", ps: "チケット提示", link: "https://www.google.com/maps/search/?api=1&query=Ghibli+Park" },
+                    { time: "16:00", title: "開車回名古屋", type: "drive", desc: "市區還車", rant: "開車去名古屋我真的覺得你們要給我錢或是給我操我他媽超累超忙還充當翻譯駕駛導遊滑雪教練廚師我幹你娘", link: "https://www.google.com/maps/search/?api=1&query=Nagoya+Station" },
+                    { time: "19:00", title: "大須觀音商店街", type: "shop", desc: "最後採買", link: "https://www.google.com/maps/search/?api=1&query=Osu+Shopping+District" }
                 ]
             },
             {
@@ -255,7 +255,7 @@
                 weatherCity: "Nagoya",
                 events: [
                     { time: "11:00", title: "市區自由活動", type: "shop", desc: "吃早餐 / 整理行李" },
-                    { time: "19:00", title: "前往 中部國際機場", type: "transport", desc: "名鐵 μ-SKY" },
+                    { time: "19:00", title: "前往 中部國際機場", type: "transport", desc: "名鐵 μ-SKY", link: "https://www.google.com/maps/search/?api=1&query=Chubu+Centrair+International+Airport" },
                     { time: "22:45", title: "起飛 (MM723)", type: "flight", desc: "回家面對現實" }
                 ]
             }
@@ -289,15 +289,13 @@
 
         async function renderDay(idx) {
             currentDayIdx = idx;
-            renderTabs(); // Update styling
+            renderTabs(); 
             const day = tripData[idx];
             const container = document.getElementById('itinerary-container');
             
-            // Fetch Weather
+            // Fetch Weather (Same logic)
             let temp = "--";
-            let wCode = "";
             try {
-                // Mock coords for simplicity
                 const latLong = { 'Nagoya': '35.18,136.90', 'Takayama': '36.14,137.25', 'Hakuba': '36.69,137.86', 'Kanazawa': '36.56,136.65', 'Gujo': '35.75,136.96' };
                 const coords = latLong[day.weatherCity] || latLong['Nagoya'];
                 const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coords.split(',')[0]}&longitude=${coords.split(',')[1]}&current_weather=true`);
@@ -343,7 +341,12 @@
                             ` : ''}
 
                             <div class="flex gap-2 mt-3">
-                                ${ev.link ? `<button onclick="window.open('${ev.link}', '_blank')" class="flex-1 bg-gray-50 hover:bg-gray-100 py-2 rounded-lg text-xs font-bold text-gray-600"><i class="fas fa-location-arrow mr-1"></i>導航</button>` : ''}
+                                <!-- UPDATED LINK LOGIC: Using <a> tag instead of <button onclick> for better mobile linking -->
+                                ${ev.link ? `
+                                <a href="${ev.link}" target="_blank" class="flex-1 bg-gray-50 hover:bg-gray-100 py-2 rounded-lg text-xs font-bold text-gray-600 flex items-center justify-center decoration-0">
+                                    <i class="fas fa-location-arrow mr-1"></i>導航
+                                </a>` : ''}
+                                
                                 ${ev.ps ? `<button onclick="showBigCard('${ev.ps}')" class="flex-1 bg-indigo-50 hover:bg-indigo-100 py-2 rounded-lg text-xs font-bold text-indigo-600"><i class="fas fa-expand mr-1"></i>大字卡</button>` : ''}
                                 ${ev.rant ? `<button onclick="showDriverRant('${ev.rant}')" class="w-10 bg-red-50 hover:bg-red-100 rounded-lg text-red-500 flex items-center justify-center"><i class="fas fa-angry"></i></button>` : ''}
                                 ${ev.type === 'ski' ? `<button onclick="showSkiModal()" class="flex-1 bg-blue-50 hover:bg-blue-100 py-2 rounded-lg text-xs font-bold text-blue-600"><i class="fas fa-tags mr-1"></i>比價</button>` : ''}
@@ -382,7 +385,6 @@
         function showChecklist() { document.getElementById('modal-checklist').classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
         
-        // Start
         init();
     </script>
 </body>
